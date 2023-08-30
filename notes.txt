@@ -1,0 +1,16 @@
+Notes:
+
+	When iterating through pandas dataframe, rather than appending new row when creating new dataframe
+	rather append to list or dict, for performance
+
+	if data is too large, will have to make functionality to read in batches
+
+	user must specify column names as price, volume...
+
+	time bars: inclusive on left side  of bar, exclusive on right i.e. trades are included on "[t0, t1)" basis
+	
+	put make_bars in init?
+
+	pd.read_csv necessary to specify index column which also must be dates, names of column (price, volume)
+
+	datetime index must have same precision
