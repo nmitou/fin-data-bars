@@ -10,3 +10,5 @@ Clone this directory and install with pip:
 ```
 pip install . -r requirements.txt
 ```
+
+![](misc/room-on-fire.gif)
