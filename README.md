@@ -6,7 +6,7 @@ See [main_example.py](main_example.py) for basic usage.
 
 ## Installation
 
-Clone this directory and install with pip:
+Clone this repository and, from the root directory, install with pip:
 ```
 pip install . -r requirements.txt
 ```
