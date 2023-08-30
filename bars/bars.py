@@ -1,7 +1,3 @@
-"""
-
-"""
-
 import pandas as pd
 import numpy as np
 
@@ -205,7 +201,7 @@ class TimeBars(BarsBase):
 
 	def __init__(self, threshold, file_path, **kwargs):
 		"""
-	    Construct TimeBars object where trade bars are formed by grouping trades falling into specific time buckets.
+	    Construct TimeBars object where trade bars are formed by grouping trades falling into specific time intervals.
         TimeBars objects are initialised with a threshold specifying the length of time per bar, where the timestamps on the resulting dataframe (after the 
         make_bars method has been called) specify the end of the bar. The default units for the bar threshold is set to minutes, however this can be adjusted
         with the set_unit method with potential options: 'days', 'hours', 'minutes', 'seconds', 'milliseconds', 'microseconds' and 'nanoseconds'. 
