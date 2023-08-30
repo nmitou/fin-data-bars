@@ -145,12 +145,12 @@ class TickBars(BarsBase):
 
 	    Returns
 	    -------
-	    TYPE
-	        DESCRIPTION.
+	    None.
 
 	    """
 		if self.get_threshold() == 0:
-			return pd.DataFrame(columns=['Open', 'High', 'Low', 'Close'])
+			self._bars_data = pd.DataFrame(columns=['Open', 'High', 'Low', 'Close'])
+			return
 		data = []
 		# initialise loop variables
 		cur_open = None
@@ -170,9 +170,8 @@ class TickBars(BarsBase):
 				data.append((timestamp, cur_open, cur_high, cur_low, cur_close))
 				cur_open = None
 				count = 0
-		df = pd.DataFrame(data, columns=['Timestamp', 'Open', 'High', 'Low', 'Close'])
-		df.set_index('Timestamp', inplace=True)
-		return df
+		self._bars_data = pd.DataFrame(data, columns=['Timestamp', 'Open', 'High', 'Low', 'Close'])
+		self._bars_data.set_index('Timestamp', inplace=True)
 
 
 class TimeBars(BarsBase):
@@ -278,7 +277,8 @@ class TimeBars(BarsBase):
 
 	    """
 		if self.get_threshold()[0] == 0:
-			return pd.DataFrame(columns=['Open', 'High', 'Low', 'Close'])
+			self._bars_data = pd.DataFrame(columns=['Open', 'High', 'Low', 'Close'])
+			return
 		data = []
 		# initialise loop variables
 		cur_open = None
@@ -303,9 +303,8 @@ class TimeBars(BarsBase):
 					bar_t += self._dt
 		# can maybe leave next line out, as, by closing bar, assuming no more trades occurred in this time period
 		data.append((bar_t, cur_open, cur_high, cur_low, tick.price))
-		df = pd.DataFrame(data, columns=['Timestamp', 'Open', 'High', 'Low', 'Close'])
-		df.set_index('Timestamp', inplace=True)
-		return df
+		self._bars_data = pd.DataFrame(data, columns=['Timestamp', 'Open', 'High', 'Low', 'Close'])
+		self._bars_data.set_index('Timestamp', inplace=True)
 
 
 class VolumeBars(BarsBase):
@@ -341,7 +340,8 @@ class VolumeBars(BarsBase):
 
 	    """
 		if self.get_threshold() == 0:
-			return pd.DataFrame(columns=['Open', 'High', 'Low', 'Close'])
+			self._bars_data = pd.DataFrame(columns=['Open', 'High', 'Low', 'Close'])
+			return
 		data = []
 		cur_open = None
 		volume = 0
@@ -366,6 +366,5 @@ class VolumeBars(BarsBase):
 				# new bar
 				if volume == 0:
 					cur_open = None
-		df = pd.DataFrame(data, columns=['Timestamp', 'Open', 'High', 'Low', 'Close'])
-		df.set_index('Timestamp', inplace=True)
-		return df
+		self._bars_data = pd.DataFrame(data, columns=['Timestamp', 'Open', 'High', 'Low', 'Close'])
+		self._bars_data.set_index('Timestamp', inplace=True)

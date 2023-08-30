@@ -62,6 +62,9 @@ class BarsBaseTestCase(unittest.TestCase):
 		self.pandas_df = pd.read_csv(filepath_or_buffer = self.base_test_file_mod, parse_dates = True, index_col = 0, names = ['price', 'volume', 'exchange_code', 'trade_conditions'])
 		self.assertTrue(self.bars.get_tick_data().equals(self.pandas_df))
 
+	def test_get_bars_data(self):
+		self.assertIsNone(self.bars.get_bars_data()) # None as as bars have been created
+
 
 class TickBarsTestCase(unittest.TestCase):
 
@@ -134,7 +137,8 @@ class TickBarsTestCase(unittest.TestCase):
 				writer = csv.writer(csv_file, dialect = 'excel')
 				writer.writerows(data)
 			tickbars = TickBars(threshold, test_file, index_col = 0, names = ['price', 'volume'])
-			df = tickbars.make_bars()
+			tickbars.make_bars()
+			df = tickbars.get_bars_data()
 			self.assertTrue(df.equals(soln), "test number {}".format(n))
 			os.remove(test_file) 
 
@@ -298,7 +302,8 @@ class TimeBarsTestCase(unittest.TestCase):
 				writer.writerows(data)
 			timebars = TimeBars(threshold, test_file, index_col = 0, names = ['price', 'volume'])
 			timebars.set_unit(unit)
-			df = timebars.make_bars()
+			timebars.make_bars()
+			df = timebars.get_bars_data()
 			self.assertTrue(df.equals(soln), "test number {}".format(n))
 			os.remove(test_file) 
 
@@ -389,7 +394,8 @@ class VolumeBarsTestCase(unittest.TestCase):
 				writer = csv.writer(csv_file, dialect = 'excel')
 				writer.writerows(data)
 			volumebars = VolumeBars(threshold, test_file, index_col = 0, names = ['price', 'volume'])
-			df = volumebars.make_bars()
+			volumebars.make_bars()
+			df = volumebars.get_bars_data()
 			self.assertTrue(df.equals(soln), "test number {}".format(n))
 			os.remove(test_file) 
 
