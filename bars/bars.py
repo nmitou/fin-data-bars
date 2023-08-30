@@ -111,6 +111,38 @@ class BarsBase:
 	    """
 		return self._bars_data
 
+	@staticmethod
+	def set_OHLC(cur_open, cur_high, cur_low, cur_close, cur_price):
+		"""
+		Method takes in current values for Open, High, Low, Close prices as iteration through trades/ticks proceeds
+		and updates them accordingly with the current tick price (cur_price) if required.
+
+		Parameters
+	    ----------
+	    cur_open : int, float, None
+	        Current Open price. If None, this is set to the current tick price (cur_price).
+	    cur_high : int, float, None
+	        Current High price. If None, cur_open will also be None, and this is set to the current tick price (cur_price).
+	        Otherwise, this is reset higher if the current tick price is greater.
+	    cur_low : int, float, None
+	        Current Low price. If None, cur_open will also be None, and this is set to the current tick price (cur_price).
+	        Otherwise, this is reset lower if the current tick price is less.
+	    cur_close : int, float, None
+	        Current Close price. This is always reset to the current tick price.
+
+        Returns
+	    -------
+	    None.
+
+		"""
+		if cur_open is None: 
+			cur_open = cur_high = cur_low = cur_price
+		else:
+			cur_high = cur_price if cur_price > cur_high else cur_high
+			cur_low = cur_price if cur_price < cur_low else cur_low
+		cur_close = cur_price
+		return (cur_open, cur_high, cur_low, cur_close)
+
 
 class TickBars(BarsBase):
 
@@ -154,21 +186,15 @@ class TickBars(BarsBase):
 			return
 		data = []
 		# initialise loop variables
-		cur_open = None
+		cur_open = cur_high = cur_low = cur_close = None
 		count = 0
 		for tick in self.get_tick_data().itertuples():
 			# do next tick
-			if cur_open is None: # new bar
-				cur_open = cur_high = cur_low = cur_close = tick.price
-			else:
-				cur_high = tick.price if tick.price > cur_high else cur_high
-				cur_low = tick.price if tick.price < cur_low else cur_low
-			cur_close = tick.price
-			timestamp = tick.Index
+			cur_open, cur_high, cur_low, cur_close = self.set_OHLC(cur_open, cur_high, cur_low, cur_close, tick.price)
 			count += 1
 			# end bar
 			if count == self.get_threshold():
-				data.append((timestamp, cur_open, cur_high, cur_low, cur_close))
+				data.append((tick.Index, cur_open, cur_high, cur_low, cur_close))
 				cur_open = None
 				count = 0
 		self._bars_data = pd.DataFrame(data, columns=['Timestamp', 'Open', 'High', 'Low', 'Close'])
@@ -309,17 +335,12 @@ class TimeBars(BarsBase):
 			return
 		data = []
 		# initialise loop variables
-		cur_open = None
+		cur_open = cur_high = cur_low = cur_close = None
 		bar_t = self.get_tick_data().index[0] + self._dt
 		for tick in self.get_tick_data().itertuples():
 			if tick.Index < bar_t:
 				# do next tick
-				if cur_open is None: # new bar
-					cur_open = cur_high = cur_low = cur_close = tick.price
-				else:
-					cur_high = tick.price if tick.price > cur_high else cur_high
-					cur_low = tick.price if tick.price < cur_low else cur_low
-				cur_close = tick.price
+				cur_open, cur_high, cur_low, cur_close = self.set_OHLC(cur_open, cur_high, cur_low, cur_close, tick.price)
 			else:
 				# end bar
 				data.append((bar_t, cur_open, cur_high, cur_low, cur_close))
@@ -376,23 +397,17 @@ class VolumeBars(BarsBase):
 			self._bars_data = pd.DataFrame(columns=['Open', 'High', 'Low', 'Close'])
 			return
 		data = []
-		cur_open = None
+		cur_open = cur_high = cur_low = cur_close = None
 		volume = 0
 		for tick in self.get_tick_data().itertuples():
 			# do next tick
-			if cur_open is None: # new bar
-				cur_open = cur_high = cur_low = cur_close = tick.price
-			else:
-				cur_high = tick.price if tick.price > cur_high else cur_high
-				cur_low = tick.price if tick.price < cur_low else cur_low
-			cur_close = tick.price
-			timestamp = tick.Index
+			cur_open, cur_high, cur_low, cur_close = self.set_OHLC(cur_open, cur_high, cur_low, cur_close, tick.price)
 			volume += tick.volume
 			# end bar
 			if volume >= self.get_threshold():
 				# commit bar(s)
 				while volume >= self.get_threshold():
-					data.append((timestamp, cur_open, cur_high, cur_low, cur_close))
+					data.append((tick.Index, cur_open, cur_high, cur_low, cur_close))
 					volume -= self.get_threshold()
 					# new bar if still excess volume
 					cur_open = cur_high = cur_low = cur_close

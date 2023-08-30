@@ -65,6 +65,31 @@ class BarsBaseTestCase(unittest.TestCase):
 	def test_get_bars_data(self):
 		self.assertIsNone(self.bars.get_bars_data()) # None as as bars have been created
 
+	def test_set_OHLC(self):
+		# First test, set all
+		O = H = L = C = None
+		O_out, H_out, L_out, C_out = self.bars.set_OHLC(O, H, L, C, 100)
+		self.assertEqual(O_out, 100)
+		self.assertEqual(H_out, 100)
+		self.assertEqual(L_out, 100)
+		self.assertEqual(C_out, 100)
+
+		# Second test, reset H
+		O = H = L = C = 100
+		O_out, H_out, L_out, C_out = self.bars.set_OHLC(O, H, L, C, 110)
+		self.assertEqual(O_out, 100)
+		self.assertEqual(H_out, 110)
+		self.assertEqual(L_out, 100)
+		self.assertEqual(C_out, 110)
+
+		# Third test, reset L
+		O = H = L = C = 100
+		O_out, H_out, L_out, C_out = self.bars.set_OHLC(O, H, L, C, 90)
+		self.assertEqual(O_out, 100)
+		self.assertEqual(H_out, 100)
+		self.assertEqual(L_out, 90)
+		self.assertEqual(C_out, 90)
+
 
 class TickBarsTestCase(unittest.TestCase):
 
