@@ -141,7 +141,8 @@ class TickBars(BarsBase):
 
 	def make_bars(self):
 		"""
-	    
+	    Constructs bars based on the chosen threshold for number of ticks/trades.
+	    Use getter method get_bars_data to get the pandas DataFrame.
 
 	    Returns
 	    -------
@@ -178,16 +179,24 @@ class TimeBars(BarsBase):
 
 	def __init__(self, threshold, file_path, **kwargs):
 		"""
-	    
+	    Construct TimeBars object where trade bars are formed by grouping trades falling into specific time buckets.
+        TimeBars objects are initialised with a threshold specifying the length of time per bar, where the timestamps on the resulting dataframe (after the 
+        make_bars method has been called) specify the end of the bar. The default units for the bar threshold is set to minutes, however this can be adjusted
+        with the set_unit method with potential options: 'days', 'hours', 'minutes', 'seconds', 'milliseconds', 'microseconds' and 'nanoseconds'. 
+        Additionally, the file path to CSV or text document must be specified along with other keyword arguments to be passed to the pandas read_csv function 
+        to construct a pandas dataframe.
+        Required keyword arguments include index_col specifying the column number to be used as the dataframe's index which should be datetimes, these
+        are parsed automatically so there is no need to specify the parse_dates argument. Additionally, a column with the name < price > must be specified.
 
 	    Parameters
 	    ----------
-	    threshold : TYPE
-	        DESCRIPTION.
-	    file_path : TYPE
-	        DESCRIPTION.
-	    **kwargs : TYPE
-	        DESCRIPTION.
+	    threshold : int
+	        Length of time per bar (default in minutes).
+	    file_path : str
+	        Path to data file/csv.
+	    **kwargs
+	        Keyword arguments to pass through to pandas.read_csv.
+            See above for required keyword arguments.
 
 	    Returns
 	    -------
@@ -200,12 +209,13 @@ class TimeBars(BarsBase):
 
 	def set_unit(self, unit):
 		"""
-	    
+	    Setter method for units of time per bar.
 
 	    Parameters
 	    ----------
-	    unit : TYPE
-	        DESCRIPTION.
+	    unit : str
+	        Units of time per bar.
+	        Options: 'days', 'hours', 'minutes', 'seconds', 'milliseconds', 'microseconds' and 'nanoseconds'.
 
 	    Returns
 	    -------
@@ -216,46 +226,64 @@ class TimeBars(BarsBase):
 
 	def get_threshold(self):
 		"""
-	    
+	    Getter method for threshold used to construct time bars.
+	    Returns a tuple of (int, str) corresponding to time and units.
+	    This method is overidden from the parent class BarsBase to account for extra parameter (unit) required to construct bars.
 
 	    Returns
 	    -------
-	    TYPE
-	        DESCRIPTION.
-	    TYPE
-	        DESCRIPTION.
+	    int
+	        Length of time per bar.
+	    str
+	        Units of time used for bar construction.
 
 	    """
 		return (self._threshold, self._unit)
 
 	def set_threshold(self, threshold, unit):
-		""" overridden function in case other parent functipn is used without setting unit
-			rather used set_threshold_Timedelta
+		""" 
+		Setter method for threshold used to construct bar, where the time per bar and unit of time must be specified.
+		This method overrides the method in the parent class BarsBase as an extra parameter is needed in addition to the threshold 
+		to construct time bars (i.e. unit).
+
+		Parameters
+	    ----------
+	    threshold : int
+	        Length of time per bar.
+	    unit : str
+	        Units of time per bar.
+	        Options: 'days', 'hours', 'minutes', 'seconds', 'milliseconds', 'microseconds' and 'nanoseconds'.
+		
+		Returns
+	    -------
+	    None.
+
 		"""
 		self.set_threshold_Timedelta(threshold, unit)
 
 	def get_threshold_Timedelta(self):
 		"""
-	    
+	    Getter method which returns the pandas Timedelta object corresponding to the chosen time per bar.
 
 	    Returns
 	    -------
-	    TYPE
-	        DESCRIPTION.
+	    pandas.Timedelta
+	        Represents a duration, the difference between two dates or times.
 
 	    """
 		return self._dt
 
 	def set_threshold_Timedelta(self, threshold, unit):
 		"""
-	    
+	    Setter method which performs the same function as set_threshold, either can be used.
 
 	    Parameters
 	    ----------
-	    threshold : TYPE
-	        DESCRIPTION.
-	    unit : TYPE
-	        DESCRIPTION.
+	    threshold : int
+	        Length of time per bar.
+	    unit : str
+	        Units of time per bar.
+	        Options: 'days', 'hours', 'minutes', 'seconds', 'milliseconds', 'microseconds' and 'nanoseconds'.
 
 	    Returns
 	    -------
@@ -268,12 +296,12 @@ class TimeBars(BarsBase):
 
 	def make_bars(self):
 		"""
-	    
+	    Constructs bars based on the chosen time per bar.
+	    Use getter method get_bars_data to get the pandas DataFrame.
 
 	    Returns
 	    -------
-	    TYPE
-	        DESCRIPTION.
+	    None.
 
 	    """
 		if self.get_threshold()[0] == 0:
@@ -311,16 +339,21 @@ class VolumeBars(BarsBase):
 
 	def __init__(self, threshold, file_path, **kwargs):
 		"""
-	    
+	    Construct VolumeBars object where trade bars are formed by aggregating ticks until a volume threshold has been met.
+        VolumeBars objects are initialised with a threshold specifying the total trade volume per bar, file path to CSV or text document along with other keyword
+        arguments to be passed to the pandas read_csv function to construct a pandas dataframe.
+        Required keyword arguments include index_col specifying the column number to be used as the dataframe's index which should be datetimes, these
+        are parsed automatically so there is no need to specify the parse_dates argument. Additionally, a column with the name < price > must be specified.
 
 	    Parameters
 	    ----------
-	    threshold : TYPE
-	        DESCRIPTION.
-	    file_path : TYPE
-	        DESCRIPTION.
-	    **kwargs : TYPE
-	        DESCRIPTION.
+	    threshold : int
+            Total trade volume per bar.
+        file_path : str
+            Path to data file/csv.
+        **kwargs 
+            Keyword arguments to pass through to pandas.read_csv.
+            See above for required keyword arguments.
 
 	    Returns
 	    -------
@@ -331,12 +364,12 @@ class VolumeBars(BarsBase):
 
 	def make_bars(self):
 		"""
-	    
+	    Constructs bars based on the chosen threshold for volume per bar.
+	    Use getter method get_bars_data to get the pandas DataFrame.
 
 	    Returns
 	    -------
-	    TYPE
-	        DESCRIPTION.
+	    None.
 
 	    """
 		if self.get_threshold() == 0:
