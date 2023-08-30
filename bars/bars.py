@@ -86,9 +86,13 @@ class TickBars(BarsBase):
 
 class TimeBars(BarsBase):
 
-	def __init__(self, threshold, unit, file_path, **kwargs):
+	def __init__(self, threshold, file_path, **kwargs):
 		super().__init__(threshold, file_path, **kwargs)
-		self.set_threshold_Timedelta(threshold, unit)
+		self._unit = 'minutes' # default value for units, rather set in setter method than constructor to abide by Liskov substitution principle
+		self.set_threshold_Timedelta(threshold, self._unit)
+
+	def set_unit(self, unit):
+		self.set_threshold(self._threshold, unit)
 
 	def get_threshold(self):
 		return (self._threshold, self._unit)

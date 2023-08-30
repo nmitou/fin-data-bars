@@ -159,10 +159,15 @@ class TimeBarsTestCase(unittest.TestCase):
 		os.remove(cls.test_data_file) 
 
 	def setUp(self):
-		self.timebars = TimeBars(self.threshold, self.unit, self.test_data_file, index_col = 0, names = ['price', 'volume'])
+		self.timebars = TimeBars(self.threshold, self.test_data_file, index_col = 0, names = ['price', 'volume'])
+		self.timebars.set_unit(self.unit)
 
 	def tearDown(self):
 		del self.timebars
+
+	def test_set_unit(self):
+		self.timebars.set_unit('milliseconds')
+		self.assertEqual(self.timebars._unit, 'milliseconds')
 
 	def test_get_threshold(self):
 		t, u = self.timebars.get_threshold()
@@ -291,7 +296,8 @@ class TimeBarsTestCase(unittest.TestCase):
 			with open(test_file, 'w', newline='') as csv_file:
 				writer = csv.writer(csv_file, dialect = 'excel')
 				writer.writerows(data)
-			timebars = TimeBars(threshold, unit, test_file, index_col = 0, names = ['price', 'volume'])
+			timebars = TimeBars(threshold, test_file, index_col = 0, names = ['price', 'volume'])
+			timebars.set_unit(unit)
 			df = timebars.make_bars()
 			self.assertTrue(df.equals(soln), "test number {}".format(n))
 			os.remove(test_file) 
