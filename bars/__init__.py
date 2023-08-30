@@ -1,1 +1,1 @@
-from bars import TickBars, TimeBars, VolumeBars
+from .bars import BarsBase, TickBars, TimeBars, VolumeBars
