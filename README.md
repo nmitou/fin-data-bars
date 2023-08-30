@@ -12,5 +12,5 @@ pip install . -r requirements.txt
 ```
 
 <p align="center">
-![](misc/room-on-fire.gif)
+	<img src="misc/room-on-fire.gif" />
 </p>
