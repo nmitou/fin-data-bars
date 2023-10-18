@@ -1,4 +1,4 @@
-# Assessment for Hudson and Thames
+# Create financial trade data bars from tick data
 
 Python module for constructing different types of trade bars/candle sticks with Open, High, Low and Close prices.
 
@@ -10,7 +10,3 @@ Clone this repository and, from the root directory, install with pip:
 ```
 pip install . -r requirements.txt
 ```
-
-<p align="center">
-	<img src="misc/room-on-fire.gif" />
-</p>
