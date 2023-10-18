@@ -5,4 +5,5 @@ setup(name = 'bars',
       description = 'Package used to calculate different trade bars/candle sticks based on tick data.',
       author = 'Nicolas Mitoulis',
       packages = ['bars'],
-      zip_safe = False)
+      zip_safe = False,
+      python_requires='>=3.8.17')
