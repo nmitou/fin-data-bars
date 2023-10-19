@@ -15,7 +15,7 @@ dependencies = [
     "numpy >= 1.19.5",
     "pandas >= 1.1.5"
 ]
-license = "LICENCE"
+license = {file = "LICENCE"}
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
