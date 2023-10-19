@@ -53,10 +53,9 @@ volume_bars.make_bars() # construct bars
 volume_bars.get_bars_data() # returns pandas DataFrame
 ```
 
-<!-- To be updated: -->
-<!-- ## Installation
+## Installation
 
-Clone this repository and, from the root directory, install with pip:
+Install directly from Github with pip:
 ```
-pip install . -r requirements.txt
-``` -->
+pip install git+https://github.com/nmitou/fin-data-bars
+```
