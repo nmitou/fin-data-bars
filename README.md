@@ -53,9 +53,10 @@ volume_bars.make_bars() # construct bars
 volume_bars.get_bars_data() # returns pandas DataFrame
 ```
 
-## Installation
+<!-- To be updated: -->
+<!-- ## Installation
 
 Clone this repository and, from the root directory, install with pip:
 ```
 pip install . -r requirements.txt
-```
+``` -->
