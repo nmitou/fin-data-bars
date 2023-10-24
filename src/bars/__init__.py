@@ -15,4 +15,4 @@ TimeBars
 VolumeBars
 	VolumeBars class where trade bars are formed by aggregating ticks until a volume threshold has been met.
 """
-from .bars import TickBars, TimeBars, VolumeBars
+from .bars import BarsBase, TickBars, TimeBars, VolumeBars
