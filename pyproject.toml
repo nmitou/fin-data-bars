@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bars"
-version = "0.1"
+version = "0.0.1"
 description = "Calculate different trade bars/candle sticks based on tick data."
 authors = [
     {name = "Nicolas Mitoulis"},
