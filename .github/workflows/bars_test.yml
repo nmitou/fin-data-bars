@@ -2,9 +2,9 @@ name: bars tests
 
 on:
     push:
-        branches: [ "main", "add_testing" ]
+        branches: [ "main" ]
     pull_request:
-        branches: [ "main", "add_testing" ]
+        branches: [ "main" ]
 
 jobs:
     test:
