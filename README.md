@@ -56,6 +56,10 @@ volume_bars.get_bars_data() # returns pandas DataFrame
 ## Installation
 
 Install directly from Github with pip:
-```
+```bash
 pip install git+https://github.com/nmitou/fin-data-bars
+```
+or clone this repo and install locally:
+```bash
+python -m pip install .
 ```
