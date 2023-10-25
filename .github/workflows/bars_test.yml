@@ -2,8 +2,16 @@ name: bars tests
 
 on:
     push:
+        paths-ignore:
+            - '**.md'
+            - '.gitignore'
+            - 'LICENCE'
         branches: [ "main" ]
     pull_request:
+        paths-ignore:
+            - '**.md'
+            - '.gitignore'
+            - 'LICENCE'
         branches: [ "main" ]
 
 jobs:
