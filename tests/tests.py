@@ -61,6 +61,11 @@ class BarsBaseTestCase(unittest.TestCase):
 		self.bars.set_tick_data(self.base_test_file_mod, index_col = 0, names = ['price', 'volume', 'exchange_code', 'trade_conditions'])
 		self.pandas_df = pd.read_csv(filepath_or_buffer = self.base_test_file_mod, parse_dates = True, index_col = 0, names = ['price', 'volume', 'exchange_code', 'trade_conditions'])
 		self.assertTrue(self.bars.get_tick_data().equals(self.pandas_df))
+	
+	def test_set_tick_data_with_date_arg(self):
+		self.bars.set_tick_data(self.base_test_file_mod, index_col = 0, parse_dates = True, names = ['price', 'volume', 'exchange_code', 'trade_conditions'])
+		self.pandas_df = pd.read_csv(filepath_or_buffer = self.base_test_file_mod, parse_dates = True, index_col = 0, names = ['price', 'volume', 'exchange_code', 'trade_conditions'])
+		self.assertTrue(self.bars.get_tick_data().equals(self.pandas_df))
 
 	def test_get_bars_data(self):
 		self.assertIsNone(self.bars.get_bars_data()) # None as as bars have been created
