@@ -397,7 +397,3 @@ class VolumeBarsTestCase(unittest.TestCase):
 			df = volumebars.get_bars_data()
 			self.assertTrue(df.equals(soln), "test number {}".format(n))
 			os.remove(test_file) 
-
-
-if __name__ == '__main__':
-	unittest.main(verbosity=2)
