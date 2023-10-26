@@ -1,3 +1,5 @@
+![bars tests](https://github.com/nmitou/fin-data-bars/actions/workflows/bars_test.yml/badge.svg)
+
 # Create financial trade data bars from tick data
 
 Python module for constructing different types of trade bars/candle sticks with Open, High, Low and Close prices, utilising pandas dataframes for storing the tick data and bars once constructed. Thus far the module allows for the creation of time bars, tick bars and volume bars.
