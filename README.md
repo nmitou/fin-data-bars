@@ -61,7 +61,7 @@ Install directly from Github with pip:
 ```bash
 pip install git+https://github.com/nmitou/fin-data-bars
 ```
-or clone this repo and install locally:
+or, for development and testing, clone this repo and, with your virtual environment activated, install locally:
 ```bash
-python -m pip install .
+python -m pip install -e .[test]
 ```
