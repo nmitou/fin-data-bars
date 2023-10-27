@@ -31,7 +31,8 @@ jobs:
             - name: Install dependencies
               run: |
                 python -m pip install --upgrade pip
-                python -m pip install -e .
-            - name: Test bars code
-              run: python -m unittest tests.tests
-              
+                python -m pip install -e .[test]
+            - name: Run coverage & test bars code
+              run: coverage run -m --source src/bars unittest tests.tests -v
+            - name: Produce coverage report
+              run: coverage report --show-missing
