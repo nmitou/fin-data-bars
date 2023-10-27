@@ -194,7 +194,7 @@ class TimeBarsTestCase(unittest.TestCase):
 
 	def test_set_unit(self):
 		self.timebars.set_unit('milliseconds')
-		self.assertEqual(self.timebars._unit, 'seconds')
+		self.assertEqual(self.timebars._unit, 'milliseconds')
 
 	def test_get_threshold(self):
 		t, u = self.timebars.get_threshold()
