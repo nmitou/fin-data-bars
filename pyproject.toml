@@ -24,3 +24,6 @@ classifiers = [
 
 [project.urls]
 "Homepage" = "https://github.com/nmitou/fin-data-bars"
+
+[project.optional-dependencies]
+test = ["coverage"]
